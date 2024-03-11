@@ -15,7 +15,7 @@ const accountController = {
       .custom(async (value) => {
         const user = await Account.findOne({ email: value });
         if (user) {
-          throw new Error("Email sudah terdaftar");
+          throw new Error(`Email ${value} sudah terdaftar`);
         }
       }),
 
@@ -29,7 +29,7 @@ const accountController = {
     if (!errors.isEmpty()) {
       const errorsObject = validationErrorToObject(errors.array());
 
-      res.status(400).send({
+      return res.status(400).send({
         status: "error",
         errors: errorsObject,
       });
