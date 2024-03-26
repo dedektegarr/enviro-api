@@ -18,7 +18,7 @@ const accountController = {
       .matches(/^[a-zA-Z0-9_.]+$/)
       .withMessage("Username hanya boleh berisi huruf, dan angka")
       .custom(async (value) => {
-        const user = await Account.findOne({ username: value });
+        const user = await Account.findOne({ username: value.toLowerCase() });
         if (user) {
           throw new Error(`Username ${value} sudah terdaftar`);
         }

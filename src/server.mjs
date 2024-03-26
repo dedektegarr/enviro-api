@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import app from "./app.mjs";
+import app from "./index.mjs";
 
 const port = process.env.PORT || 3000;
 const dbName = process.env.DB_NAME;
