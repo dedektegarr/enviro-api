@@ -20,6 +20,11 @@ const accountController = {
       }),
 
     body("password").notEmpty().withMessage("Password tidak boleh kosong"),
+    body("password_confirmation")
+      .notEmpty()
+      .withMessage("Konfirmasi password tidak boleh kosong")
+      .custom((value, { req }) => value === req.body.password)
+      .withMessage("Password tidak sesuai"),
   ],
 
   register: async (req, res) => {
