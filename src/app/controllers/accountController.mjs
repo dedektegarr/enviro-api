@@ -1,5 +1,10 @@
 import { body, matchedData, validationResult } from "express-validator";
-import { hashPassword, validationErrorToObject } from "../../utils/utils.mjs";
+import {
+  comparePassword,
+  hashPassword,
+  validationErrorToObject,
+} from "../../utils/utils.mjs";
+import jwt from "jsonwebtoken";
 import Account from "../models/Account.mjs";
 import User from "../models/User.mjs";
 
@@ -8,6 +13,10 @@ const accountController = {
     body("username")
       .notEmpty()
       .withMessage("Username tidak boleh kosong")
+      .isLength({ min: 3, max: 20 })
+      .withMessage("Username harus memiliki panjang antara 3-20 karakter")
+      .matches(/^[a-zA-Z0-9_.]+$/)
+      .withMessage("Username hanya boleh berisi huruf, dan angka")
       .custom(async (value) => {
         const user = await Account.findOne({ username: value });
         if (user) {
@@ -55,7 +64,7 @@ const accountController = {
       const hashedPassword = await hashPassword(data.password);
 
       const newAccount = new Account({
-        username: data.username,
+        username: data.username.toLowerCase(),
         email: data.email,
         password: hashedPassword,
       });
@@ -80,8 +89,36 @@ const accountController = {
   },
 
   login: async (req, res) => {
-    res.send(req.body);
+    const { emailOrUsername, password } = req.body;
+
+    try {
+      const account = await Account.findOne({
+        $or: [
+          { email: emailOrUsername.toLowerCase() },
+          { username: emailOrUsername.toLowerCase() },
+        ],
+      });
+
+      if (account) {
+        const passwordIsCorrect = await comparePassword(
+          password,
+          account.password
+        );
+
+        if (passwordIsCorrect) {
+          const token = jwt.sign({ sub: account._id }, process.env.SECRET_KEY);
+          return res.status(200).send({ status: "success", token });
+        }
+      }
+
+      throw new Error("Akun tidak ditemukan");
+    } catch (error) {
+      res.status(401).send({ status: "error", message: error.message });
+    }
   },
+
+  currentUser: async (req, res) =>
+    res.status(200).send({ status: "success", user: req.user }),
 };
 
 export default accountController;

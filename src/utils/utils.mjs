@@ -20,4 +20,11 @@ const hashPassword = async (password) => {
   }
 };
 
-export { validationErrorToObject, hashPassword };
+const comparePassword = async (password, hash) => {
+  const correctPassword = await bcrypt.compare(password, hash);
+  if (!correctPassword) return false;
+
+  return true;
+};
+
+export { validationErrorToObject, hashPassword, comparePassword };
