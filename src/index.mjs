@@ -11,7 +11,7 @@ configDotenv();
 app.use(bodyParser.json());
 app.use(passport.initialize());
 
-app.use("/", (req, res) => res.send("oke"));
+// app.use("/", (req, res) => res.send("oke"));
 app.use("/api/v1", router);
 
 export default app;
