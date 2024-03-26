@@ -9,4 +9,6 @@ accountRouter.post(
   accountController.register
 );
 
+accountRouter.post("/login", accountController.login);
+
 export default accountRouter;

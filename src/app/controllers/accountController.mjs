@@ -5,7 +5,15 @@ import User from "../models/User.mjs";
 
 const accountController = {
   validation: [
-    body("name").notEmpty().withMessage("Nama tidak boleh kosong"),
+    body("username")
+      .notEmpty()
+      .withMessage("Username tidak boleh kosong")
+      .custom(async (value) => {
+        const user = await Account.findOne({ username: value });
+        if (user) {
+          throw new Error(`Username ${value} sudah terdaftar`);
+        }
+      }),
 
     body("email")
       .isEmail()
@@ -47,12 +55,13 @@ const accountController = {
       const hashedPassword = await hashPassword(data.password);
 
       const newAccount = new Account({
+        username: data.username,
         email: data.email,
         password: hashedPassword,
       });
 
       const newUser = new User({
-        name: data.name,
+        username: newAccount.username,
         accountId: newAccount._id,
       });
       const saveAccount = await newAccount.save();
@@ -68,6 +77,10 @@ const accountController = {
     } catch (error) {
       res.status(400).send({ status: "error", message: error.message });
     }
+  },
+
+  login: async (req, res) => {
+    res.send(req.body);
   },
 };
 
