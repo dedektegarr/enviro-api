@@ -116,9 +116,6 @@ const accountController = {
       res.status(401).send({ status: "error", message: error.message });
     }
   },
-
-  currentUser: async (req, res) =>
-    res.status(200).send({ status: "success", user: req.user }),
 };
 
 export default accountController;
