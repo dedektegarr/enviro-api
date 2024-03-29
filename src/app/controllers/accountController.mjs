@@ -37,11 +37,11 @@ const accountController = {
       }),
 
     body("password").notEmpty().withMessage("Password tidak boleh kosong"),
-    body("password_confirmation")
-      .notEmpty()
-      .withMessage("Konfirmasi password tidak boleh kosong")
-      .custom((value, { req }) => value === req.body.password)
-      .withMessage("Password tidak sesuai"),
+    // body("password_confirmation")
+    //   .notEmpty()
+    //   .withMessage("Konfirmasi password tidak boleh kosong")
+    //   .custom((value, { req }) => value === req.body.password)
+    //   .withMessage("Password tidak sesuai"),
   ],
 
   register: async (req, res) => {
@@ -81,7 +81,7 @@ const accountController = {
       res.status(200).send({
         status: "success",
         message: "Berhasil membuat akun",
-        data: saveAccount,
+        user: saveAccount,
       });
     } catch (error) {
       res.status(400).send({ status: "error", message: error.message });
