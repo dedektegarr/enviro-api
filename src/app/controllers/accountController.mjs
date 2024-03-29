@@ -78,10 +78,11 @@ const accountController = {
 
       if (!saveAccount || !saveUser) throw new Error("Gagal membuat akun");
 
+      const token = jwt.sign({ sub: saveAccount._id }, process.env.SECRET_KEY);
+
       res.status(200).send({
         status: "success",
-        message: "Berhasil membuat akun",
-        user: saveAccount,
+        token,
       });
     } catch (error) {
       res.status(400).send({ status: "error", message: error.message });

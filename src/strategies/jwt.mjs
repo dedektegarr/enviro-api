@@ -2,6 +2,7 @@ import passport from "passport";
 import { Strategy, ExtractJwt } from "passport-jwt";
 import Account from "../app/models/Account.mjs";
 import { configDotenv } from "dotenv";
+import User from "../app/models/User.mjs";
 
 configDotenv();
 
@@ -16,7 +17,9 @@ export default passport.use(
       const account = await Account.findOne({ _id: jwt_payload.sub });
       if (!account) throw new Error("Unauthorized");
 
-      return done(null, account);
+      const user = await User.findOne({ accountId: account._id });
+
+      return done(null, user);
     } catch (error) {
       return done(error, null);
     }

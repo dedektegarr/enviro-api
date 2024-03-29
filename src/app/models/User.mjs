@@ -12,6 +12,14 @@ const userSchema = new Schema(
       unique: true,
       required: true,
     },
+    name: String,
+    phone: String,
+    address: String,
+    work: String,
+    point: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
