@@ -33,11 +33,30 @@ const postController = {
       const newPost = new Post({ title, price, address, body, user: req.user });
       const savePost = await newPost.save();
 
-      if (!savePost) throw new Error("Failed add post");
+      if (!savePost) throw new Error("Gagal menambah postingan");
 
-      res.status(200).send(savePost);
+      res
+        .status(200)
+        .send({
+          status: "success",
+          message: "Postingan anda berhasil dibuat",
+          post: savePost,
+        });
     } catch (error) {
       res.send(req.body);
+    }
+  },
+
+  delete: async (req, res) => {
+    try {
+      const deletePost = await Post.deleteOne({ _id: req.params.id });
+      if (!deletePost) throw new Error("Gagal menghapus postingan");
+
+      return res
+        .status(200)
+        .send({ status: "success", message: "Postingan berhasil dihapus" });
+    } catch (error) {
+      return res.status(400).send({ status: "error", message: error.message });
     }
   },
 };
