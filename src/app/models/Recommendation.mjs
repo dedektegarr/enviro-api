@@ -5,6 +5,7 @@ const recommendationSchema = new Schema({
     type: Number,
     required: true,
   },
+  quality: String,
   list: [],
 });
 

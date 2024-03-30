@@ -1,8 +1,9 @@
 import Recommendation from "../../app/models/Recommendation.mjs";
 
-const dumyRecommendation = [
+const dummyRecommendation = [
   {
     aqi: 5,
+    quality: "Sangat Buruk",
     list: [
       "Hindari kegiatan di luar ruangan",
       "Gunakan masker anti polusi",
@@ -13,6 +14,7 @@ const dumyRecommendation = [
   },
   {
     aqi: 4,
+    quality: "Buruk",
     list: [
       "Batasi aktivitas di luar ruangan",
       "Periksa kualitas udara dalam ruangan",
@@ -23,6 +25,7 @@ const dumyRecommendation = [
   },
   {
     aqi: 3,
+    quality: "Sedang",
     list: [
       "Kurangi aktivitas di luar ruangan",
       "Periksa kondisi kesehatan secara rutin",
@@ -33,6 +36,7 @@ const dumyRecommendation = [
   },
   {
     aqi: 2,
+    quality: "Baik",
     list: [
       "Periksa kualitas udara dalam ruangan",
       "Hindari tempat yang berpolusi",
@@ -43,6 +47,7 @@ const dumyRecommendation = [
   },
   {
     aqi: 1,
+    quality: "Sangat Baik",
     list: [
       "Gunakan alat penyaring udara dalam ruangan",
       "Buka jendela untuk sirkulasi udara",
@@ -55,7 +60,7 @@ const dumyRecommendation = [
 
 const seedRecommendationData = async () => {
   try {
-    const data = await Recommendation.insertMany(dumyRecommendation);
+    const data = await Recommendation.insertMany(dummyRecommendation);
     if (!data) throw new Error("Failed insert data");
 
     console.log("Recommendation has been inserted");
