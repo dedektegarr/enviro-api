@@ -2,7 +2,12 @@ import multer from "multer";
 import { validationErrorToObject } from "../../utils/utils.mjs";
 import Post from "../models/Post.mjs";
 import { body, matchedData, validationResult } from "express-validator";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { storage } from "../../firebase/firebase.mjs";
 import path from "path";
 
@@ -50,12 +55,15 @@ const postController = {
 
       const imageUrl = await getDownloadURL(storageRef);
 
+      console.log(upload);
+
       const newPost = new Post({
         title,
         price,
         address,
         body,
         imageUrl,
+        imagePath: upload.metadata.fullPath,
         user: req.user,
       });
       const savePost = await newPost.save();
@@ -74,8 +82,11 @@ const postController = {
 
   delete: async (req, res) => {
     try {
-      const deletePost = await Post.deleteOne({ _id: req.params.id });
+      const deletePost = await Post.findByIdAndDelete({ _id: req.params.id });
       if (!deletePost) throw new Error("Gagal menghapus postingan");
+
+      const delRef = ref(storage, deletePost.imagePath);
+      await deleteObject(delRef);
 
       return res
         .status(200)
