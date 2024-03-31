@@ -2,7 +2,7 @@ import Level from "../../app/models/Level.mjs";
 
 const dummyLevel = [
   {
-    level: 1,
+    imageUrl: 1,
     name: "Dampak Kendaraan BBM",
     description:
       "Penggunaan kendaraan berbahan bakar minyak (BBM) berkontribusi pada polusi udara dan pemanasan global karena emisi gas rumah kaca seperti karbon dioksida (CO2), nitrogen oksida (NOx), dan partikel halus. Ini mengakibatkan dampak negatif pada lingkungan dan kesehatan manusia, termasuk masalah pernapasan, penyakit jantung, dan bahkan kematian. Beralih ke kendaraan berbahan bakar alternatif seperti kendaraan listrik dapat membantu mengurangi ketergantungan pada BBM dan mengurangi emisi polutan udara, memberikan manfaat langsung bagi kualitas udara dan kesehatan manusia, terutama di daerah perkotaan yang padat penduduk.",
@@ -50,7 +50,7 @@ const dummyLevel = [
     ],
   },
   {
-    level: 2,
+    imageUrl: 2,
     name: "Pengelolaan Sampah",
     description:
       "Pengelolaan sampah yang efektif sangat penting untuk menjaga lingkungan dan kesehatan masyarakat. Dengan daur ulang dan penggunaan kembali sampah, kita dapat mengurangi pencemaran udara, air, dan tanah serta mengonservasi sumber daya alam. Prinsip-prinsip 3R (Reduce, Reuse, Recycle) membantu mengurangi jumlah sampah yang masuk ke tempat pembuangan akhir, mengurangi dampak negatifnya. Pengelolaan sampah yang buruk dapat menyebabkan penumpukan sampah, menyebarkan penyakit, dan mencemari air dan udara. Tanggung jawab pengelolaan sampah bukan hanya pemerintah, tapi juga individu untuk menjaga kelestarian lingkungan.",
@@ -98,7 +98,7 @@ const dummyLevel = [
     ],
   },
   {
-    level: 3,
+    imageUrl: 3,
     name: "Konservasi Energi",
     description:
       "Konservasi energi adalah praktik mengurangi penggunaan energi dengan meminimalkan pemborosan dan mengadopsi teknologi yang lebih efisien. Penghematan energi dapat menyebabkan berkurangnya biaya, serta meningkatnya nilai lingkungan, keamanan negara, keamanan pribadi, serta kenyamanan. Ini membantu mengurangi jejak karbon dan menjaga sumber daya alam yang terbatas.",
@@ -146,7 +146,7 @@ const dummyLevel = [
     ],
   },
   {
-    level: 4,
+    imageUrl: 4,
     name: "Dampak Polusi Udara",
     description:
       "Polusi udara memiliki dampak yang serius terhadap kesehatan manusia, lingkungan, dan ekonomi. Dampaknya dapat berupa masalah pernapasan, kerusakan lingkungan, dan berkurangnya produktivitas. Berbagai langkah telah diambil untuk mengurangi polusi udara, termasuk penggunaan energi terbarukan, transportasi berkelanjutan, dan pengendalian emisi industri.",
@@ -178,7 +178,7 @@ const dummyLevel = [
     ],
   },
   {
-    level: 5,
+    imageUrl: 5,
     name: "Teknologi Hijau untuk Mengatasi Polusi",
     description:
       "Perkembangan teknologi hijau telah menjadi solusi penting dalam mengatasi polusi udara. Teknologi seperti kendaraan listrik, energi surya, dan penggunaan bahan ramah lingkungan membantu industri merupakan salah satu penyumbang utama polusi udara. Penggunaan bahan bakar fosil, limbah industri, dan polusi udara dari proses produksi merupakan masalah yang harus diatasi. Pemerintah memiliki peran penting dalam mengatasi polusi udara melalui regulasi, kebijakan lingkungan, dan insentif untuk teknologi bersih. Keterlibatan pemerintah sangat diperlukan.",

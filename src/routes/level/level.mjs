@@ -4,6 +4,6 @@ import levelController from "../../app/controllers/levelController.mjs";
 const levelRouter = Router();
 
 levelRouter.get("/", levelController.getLevel);
-levelRouter.get("/:level", levelController.getLevelDetail);
+levelRouter.get("/:id", levelController.getLevelDetail);
 
 export default levelRouter;

@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const levelSchema = new Schema({
-  level: Number,
+  imageUrl: String,
   name: String,
   description: String,
   questions: [{ text: String, answers: [] }],
