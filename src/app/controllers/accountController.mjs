@@ -52,8 +52,12 @@ const accountController = {
       const errorsObject = validationErrorToObject(errors.array());
 
       return res.status(400).send({
-        status: "error",
-        errors: errorsObject,
+        meta: {
+          code: 400,
+          status: "error",
+          errors: errorsObject,
+        },
+        data: false,
       });
     }
 
@@ -95,7 +99,14 @@ const accountController = {
         },
       });
     } catch (error) {
-      res.status(400).send({ status: "error", message: error.message });
+      res.status(400).send({
+        meta: {
+          code: 400,
+          status: "error",
+          message: error.message,
+        },
+        data: false,
+      });
     }
   },
 
@@ -137,7 +148,14 @@ const accountController = {
 
       throw new Error("Akun tidak ditemukan");
     } catch (error) {
-      res.status(401).send({ status: "error", message: error.message });
+      res.status(401).send({
+        meta: {
+          code: 401,
+          status: "error",
+          message: error.message,
+        },
+        data: false,
+      });
     }
   },
 };

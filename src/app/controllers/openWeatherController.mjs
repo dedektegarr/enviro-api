@@ -25,19 +25,31 @@ const openWeatherController = {
       const recommendation = await getRecommendation(data.list[0].main.aqi);
 
       const simData = {
-        status: "success",
-        air_pollution: {
-          coord: data.coord,
-          aqi: data.list[0].main.aqi,
-          quality: recommendation.quality,
-          components: data.list[0].components,
+        meta: {
+          code: 200,
+          status: "success",
         },
-        recommendation: recommendation.list.slice(0, 2),
+        data: {
+          air_pollution: {
+            coord: data.coord,
+            aqi: data.list[0].main.aqi,
+            quality: recommendation.quality,
+            components: data.list[0].components,
+          },
+          recommendation: recommendation.list.slice(0, 2),
+        },
       };
 
       return res.status(200).send(simData);
     } catch (error) {
-      return res.status(400).send({ status: "error", message: error.message });
+      return res.status(400).send({
+        meta: {
+          code: 400,
+          status: "error",
+          message: error.message,
+        },
+        data: false,
+      });
     }
   },
 };

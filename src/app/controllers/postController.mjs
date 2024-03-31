@@ -71,12 +71,24 @@ const postController = {
       if (!savePost) throw new Error("Gagal menambah postingan");
 
       res.status(200).send({
-        status: "success",
-        message: "Postingan anda berhasil dibuat",
-        post: savePost,
+        meta: {
+          code: 200,
+          status: "success",
+          message: "Postingan anda berhasil dibuat",
+        },
+        data: {
+          post: savePost,
+        },
       });
     } catch (error) {
-      res.send(req.body);
+      res.send({
+        meta: {
+          code: 400,
+          status: "error",
+          message: error.message,
+        },
+        data: false,
+      });
     }
   },
 
@@ -88,11 +100,21 @@ const postController = {
       const delRef = ref(storage, deletePost.imagePath);
       await deleteObject(delRef);
 
-      return res
-        .status(200)
-        .send({ status: "success", message: "Postingan berhasil dihapus" });
+      return res.status(200).send({
+        meta: {
+          code: 200,
+          status: "success",
+          message: "Postingan berhasil dihapus",
+        },
+      });
     } catch (error) {
-      return res.status(400).send({ status: "error", message: error.message });
+      return res.status(400).send({
+        meta: {
+          code: 400,
+          status: "error",
+          message: error.message,
+        },
+      });
     }
   },
 };
