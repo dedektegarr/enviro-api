@@ -1,9 +1,25 @@
 import { Router } from "express";
 import postController from "../../app/controllers/postController.mjs";
+import multer from "multer";
+import path from "path";
 
 const postRouter = Router();
 
-postRouter.post("/", postController.validation, postController.store);
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "uploads/");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(
+//       null,
+//       file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+//     );
+//   },
+// });
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+postRouter.post("/", upload.single("image"), postController.store);
 postRouter.delete("/:id", postController.delete);
 
 export default postRouter;

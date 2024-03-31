@@ -72,6 +72,8 @@ const accountController = {
       const newUser = new User({
         username: newAccount.username,
         accountId: newAccount._id,
+        avatarUrl:
+          "https://firebasestorage.googleapis.com/v0/b/enviro-db8b4.appspot.com/o/assets%2Fdefault-avatar.png?alt=media&token=f45d5e8d-eab3-4c92-bec8-b771ff6cc26d",
       });
       const saveAccount = await newAccount.save();
       const saveUser = await newUser.save();

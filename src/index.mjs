@@ -13,6 +13,7 @@ configDotenv();
 
 // config
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
 // app.use("/", (req, res) => res.send("oke"));
