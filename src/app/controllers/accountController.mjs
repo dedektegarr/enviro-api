@@ -83,8 +83,16 @@ const accountController = {
       const token = jwt.sign({ sub: saveAccount._id }, process.env.SECRET_KEY);
 
       res.status(200).send({
-        status: "success",
-        token,
+        meta: {
+          code: 200,
+          status: "success",
+          message: "Berhasil membuat akun",
+        },
+        data: {
+          token,
+          tokenType: "Bearer",
+          user: saveUser,
+        },
       });
     } catch (error) {
       res.status(400).send({ status: "error", message: error.message });
@@ -108,9 +116,22 @@ const accountController = {
           account.password
         );
 
+        const user = await User.findOne({ accountId: account._id });
+
         if (passwordIsCorrect) {
           const token = jwt.sign({ sub: account._id }, process.env.SECRET_KEY);
-          return res.status(200).send({ status: "success", token });
+          return res.status(200).send({
+            meta: {
+              code: 200,
+              status: "success",
+              message: "Berhasil membuat akun",
+            },
+            data: {
+              token,
+              tokenType: "Bearer",
+              user,
+            },
+          });
         }
       }
 
