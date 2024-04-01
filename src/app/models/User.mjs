@@ -14,7 +14,6 @@ const userSchema = new Schema(
     },
     name: { type: String, default: "" },
     phone: { type: String, default: "" },
-    address: { type: String, default: "" },
     work: { type: String, default: "" },
     point: {
       type: Number,

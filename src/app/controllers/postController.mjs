@@ -55,8 +55,6 @@ const postController = {
 
       const imageUrl = await getDownloadURL(storageRef);
 
-      console.log(upload);
-
       const newPost = new Post({
         title,
         price,
