@@ -86,6 +86,16 @@ const accountController = {
 
       const token = jwt.sign({ sub: saveAccount._id }, process.env.SECRET_KEY);
 
+      const currentUser = {
+        _id: saveUser._id,
+        username: saveAccount.username,
+        email: saveAccount.email,
+        work: saveUser.work,
+        point: saveUser.point,
+        password: saveAccount.password,
+        avatarUrl: saveUser.avatarUrl,
+      };
+
       res.status(200).send({
         meta: {
           code: 200,
@@ -95,7 +105,7 @@ const accountController = {
         data: {
           token,
           tokenType: "Bearer",
-          user: saveUser,
+          user: currentUser,
         },
       });
     } catch (error) {
@@ -129,6 +139,16 @@ const accountController = {
 
         const user = await User.findOne({ accountId: account._id });
 
+        const currentUser = {
+          _id: user._id,
+          username: account.username,
+          email: account.email,
+          work: user.work,
+          point: user.point,
+          password: account.password,
+          avatarUrl: user.avatarUrl,
+        };
+
         if (passwordIsCorrect) {
           const token = jwt.sign({ sub: account._id }, process.env.SECRET_KEY);
           return res.status(200).send({
@@ -140,7 +160,7 @@ const accountController = {
             data: {
               token,
               tokenType: "Bearer",
-              user,
+              user: currentUser,
             },
           });
         }

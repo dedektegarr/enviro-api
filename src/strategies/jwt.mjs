@@ -19,7 +19,17 @@ export default passport.use(
 
       const user = await User.findOne({ accountId: account._id });
 
-      return done(null, user);
+      const currentUser = {
+        _id: user._id,
+        username: account.username,
+        email: account.email,
+        work: user.work,
+        point: user.point,
+        password: account.password,
+        avatarUrl: user.avatarUrl,
+      };
+
+      return done(null, currentUser);
     } catch (error) {
       return done(error, null);
     }
