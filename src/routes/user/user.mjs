@@ -9,5 +9,6 @@ const upload = multer({ storage: memoryStorage() });
 userRouter.get("/", userController.currentUser);
 userRouter.patch("/:id/update", upload.single("avatar"), userController.update);
 userRouter.patch("/:id/point", userController.updatePoint);
+userRouter.get("/leaderboard", userController.leaderboard);
 
 export default userRouter;

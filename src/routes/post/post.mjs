@@ -19,6 +19,7 @@ const postRouter = Router();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
+postRouter.get("/", postController.allPost);
 postRouter.post("/", upload.single("image"), postController.store);
 postRouter.delete("/:id", postController.delete);
 

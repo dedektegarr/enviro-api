@@ -44,9 +44,7 @@ const userController = {
       }
 
       const updatedUser = {
-        name: req.body.name,
         username: req.body.username,
-        phone: req.body.phone,
         work: req.body.work,
       };
 
@@ -61,7 +59,7 @@ const userController = {
       );
 
       const updateAccount = await Account.findOneAndUpdate(
-        { _id: req.user.accountId },
+        { _id: updateUser.accountId },
         {
           email: req.body.email,
           username: req.body.username,
@@ -117,6 +115,33 @@ const userController = {
       });
     } catch (error) {
       return res.status(400).send(error.message);
+    }
+  },
+  leaderboard: async (req, res) => {
+    try {
+      const users = await User.find({})
+        .sort({ point: "desc" })
+        .select("username point");
+      if (!users) throw new Error("Gagal mengambil data");
+
+      return res.status(200).send({
+        meta: {
+          code: 200,
+          status: "success",
+        },
+        data: {
+          users,
+        },
+      });
+    } catch (error) {
+      res.send({
+        meta: {
+          code: 400,
+          status: "error",
+          message: error.message,
+        },
+        data: false,
+      });
     }
   },
 };

@@ -115,6 +115,23 @@ const postController = {
       });
     }
   },
+
+  allPost: async (req, res) => {
+    try {
+      const posts = await Post.find({}).sort({ createdAt: "desc" });
+      if (!posts) throw new Error("Gagal mengambil data");
+
+      res.send({
+        meta: {
+          code: 200,
+          status: "success",
+        },
+        data: {
+          posts,
+        },
+      });
+    } catch (error) {}
+  },
 };
 
 export default postController;
