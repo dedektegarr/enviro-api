@@ -114,7 +114,12 @@ const messageController = {
         meta: { code: 200, status: "success" },
         data: { sender, messages },
       });
-    } catch (error) {}
+    } catch (error) {
+      res.send({
+        meta: { code: 400, status: "error", message: error.message },
+        data: false,
+      });
+    }
   },
 };
 
