@@ -5,6 +5,7 @@ import openWeatherRouter from "./openWeatherRouter/openWeatherRouter.mjs";
 import { isAuthenticated } from "../middleware/authenticated.mjs";
 import levelRouter from "./level/level.mjs";
 import postRouter from "./post/post.mjs";
+import messageRouter from "./message/message.mjs";
 
 const router = Router();
 
@@ -23,5 +24,8 @@ router.use("/level", isAuthenticated, levelRouter);
 
 // Post routes
 router.use("/post", isAuthenticated, postRouter);
+
+// message
+router.use("/message", isAuthenticated, messageRouter);
 
 export default router;
