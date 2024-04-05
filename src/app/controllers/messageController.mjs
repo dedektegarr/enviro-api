@@ -24,6 +24,7 @@ const messageController = {
 
       const newMessage = new Message({
         chatRoom: existingChatRoom ? existingChatRoom._id : newChatRoomId,
+        sender: req.user._id,
         content: req.body.content,
       });
 
@@ -31,9 +32,19 @@ const messageController = {
 
       if (!sendMessage) throw new Error("Gagal mengirim pesan");
 
-      res.send("oke");
+      res.send({
+        meta: {
+          code: 200,
+          status: "success",
+          message: "Berhasil mengirim pesan",
+        },
+        data: sendMessage,
+      });
     } catch (error) {
-      res.send(error.message);
+      res.send({
+        meta: { code: 400, status: "error", message: error.message },
+        data: false,
+      });
     }
   },
 
@@ -45,18 +56,23 @@ const messageController = {
       const chatRoomData = [];
 
       for (let chat of chatList) {
-        const receiverId = chat.participants.find(
-          (id) => id.toString() !== req.user._id.toString()
-        );
-        const receiverData = await User.findById(receiverId);
+        // const receiverId = chat.participants.find(
+        //   (id) => id.toString() !== req.user._id
+        // );
+        const receiverData = await User.findById(chat.participants[1]);
         const lastMessage = await Message.findOne({ chatRoom: chat._id }).sort({
-          timestamp: -1,
+          createdAt: -1,
         });
 
         chatRoomData.push({
-          receiver: { username: receiverData.username, id: receiverData._id },
+          receiver: {
+            username: receiverData.username,
+            avatarUrl: receiverData.avatarUrl,
+            id: receiverData._id,
+          },
           content: lastMessage.content,
-          timestamp: lastMessage.timestamp,
+          createdAt: lastMessage.createdAt,
+          _id: chat._id,
         });
       }
 
@@ -66,6 +82,37 @@ const messageController = {
           status: "success",
         },
         data: { chats: chatRoomData },
+      });
+    } catch (error) {
+      res.send({
+        meta: {
+          code: 400,
+          status: "error",
+          message: error.message,
+        },
+        data: false,
+      });
+    }
+  },
+
+  chatRoom: async (req, res) => {
+    try {
+      const messages = await Message.find({ chatRoom: req.params.id }).sort({
+        createdAt: "asc",
+      });
+      const chatRoom = await ChatRoom.findById(req.params.id);
+
+      const senderId = chatRoom.participants.find(
+        (id) => id.toString() !== req.user._id.toString()
+      );
+
+      const sender = await User.findById(senderId).select(
+        "_id username avatarUrl point"
+      );
+
+      res.send({
+        meta: { code: 200, status: "success" },
+        data: { sender, messages },
       });
     } catch (error) {}
   },

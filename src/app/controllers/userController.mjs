@@ -9,7 +9,6 @@ const userController = {
       meta: {
         code: 200,
         status: "success",
-        message: "Berhasil membuat akun",
       },
       data: {
         token: req.headers.authorization.split(" ")[1],
@@ -121,7 +120,7 @@ const userController = {
     try {
       const users = await User.find({})
         .sort({ point: "desc" })
-        .select("username point");
+        .select("username point avatarUrl");
       if (!users) throw new Error("Gagal mengambil data");
 
       return res.status(200).send({
