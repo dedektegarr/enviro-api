@@ -24,7 +24,7 @@ const messageController = {
 
       const newMessage = new Message({
         chatRoom: existingChatRoom ? existingChatRoom._id : newChatRoomId,
-        sender: req.user._id,
+        sender: senderId,
         content: req.body.content,
       });
 
@@ -97,11 +97,13 @@ const messageController = {
 
   chatRoom: async (req, res) => {
     try {
-      const messages = await Message.find({ chatRoom: req.params.id }).sort({
-        createdAt: "asc",
-      });
-      const chatRoom = await ChatRoom.findById(req.params.id);
+      const messagesData = await Message.find({ chatRoom: req.params.id }).sort(
+        {
+          createdAt: "asc",
+        }
+      );
 
+      const chatRoom = await ChatRoom.findById(req.params.id);
       const senderId = chatRoom.participants.find(
         (id) => id.toString() !== req.user._id.toString()
       );
@@ -109,6 +111,16 @@ const messageController = {
       const sender = await User.findById(senderId).select(
         "_id username avatarUrl point"
       );
+
+      const messages = messagesData.map((msg) => {
+        return {
+          isSender: msg.sender.toString() === req.user._id.toString(),
+          chatRoom: msg.chatRoom,
+          content: msg.content,
+          createdAt: msg.createdAt,
+          updatedAt: msg.updatedAt,
+        };
+      });
 
       res.send({
         meta: { code: 200, status: "success" },
