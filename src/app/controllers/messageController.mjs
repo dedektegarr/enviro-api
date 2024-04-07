@@ -56,10 +56,10 @@ const messageController = {
       const chatRoomData = [];
 
       for (let chat of chatList) {
-        // const receiverId = chat.participants.find(
-        //   (id) => id.toString() !== req.user._id
-        // );
-        const receiverData = await User.findById(chat.participants[1]);
+        const receiverId = chat.participants.find(
+          (id) => id.toString() !== req.user._id.toString()
+        );
+        const receiverData = await User.findById(receiverId);
         const lastMessage = await Message.findOne({ chatRoom: chat._id }).sort({
           createdAt: -1,
         });
