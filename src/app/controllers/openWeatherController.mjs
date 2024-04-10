@@ -36,7 +36,7 @@ const openWeatherController = {
             quality: recommendation.quality,
             components: data.list[0].components,
           },
-          recommendation: recommendation.list.slice(0, 2),
+          recommendation: recommendation.list.slice(0, 4),
         },
       };
 
