@@ -121,28 +121,28 @@ const postController = {
       const posts = await Post.find({}).sort({ createdAt: "desc" });
       if (!posts) throw new Error("Gagal mengambil data");
 
-      const postResult = posts.map((post) => {
-        return {
-          user: post.user,
-          _id: post._id,
-          title: post.title,
-          price: post.price,
-          address: post.address,
-          body: post.body,
-          imagePath: post.imagePath,
-          imageUrl: post.imageUrl,
-          createdAt: post.createdAt.toLocaleString("id-ID", {
-            year: "numeric",
-            day: "numeric",
-            month: "short",
-          }),
-          updatedAt: post.updatedAt.toLocaleString("id-ID", {
-            year: "numeric",
-            day: "numeric",
-            month: "short",
-          }),
-        };
-      });
+      // const postResult = posts.map((post) => {
+      //   return {
+      //     user: post.user,
+      //     _id: post._id,
+      //     title: post.title,
+      //     price: post.price,
+      //     address: post.address,
+      //     body: post.body,
+      //     imagePath: post.imagePath,
+      //     imageUrl: post.imageUrl,
+      //     createdAt: post.createdAt.toLocaleString("id-ID", {
+      //       year: "numeric",
+      //       day: "numeric",
+      //       month: "short",
+      //     }),
+      //     updatedAt: post.updatedAt.toLocaleString("id-ID", {
+      //       year: "numeric",
+      //       day: "numeric",
+      //       month: "short",
+      //     }),
+      //   };
+      // });
 
       res.send({
         meta: {
@@ -150,7 +150,7 @@ const postController = {
           status: "success",
         },
         data: {
-          posts: postResult,
+          posts,
         },
       });
     } catch (error) {}
